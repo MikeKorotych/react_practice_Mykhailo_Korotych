@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductItem from '../ProductItem/ProductItem';
 
-const ProductList = () => {
+const ProductList = ({ products }) => {
   return (
     <>
       <table
@@ -57,7 +57,7 @@ const ProductList = () => {
         </thead>
 
         {/* Product items */}
-        <ProductItem />
+        <ProductItem products={products} />
       </table>
 
       {/* show if No products matching selected criteria */}

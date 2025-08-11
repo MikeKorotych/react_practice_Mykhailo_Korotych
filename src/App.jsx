@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-// import React, { useState } from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import FilterPanel from './components/FilterPanel/FilterPanel';
 import ProductList from './components/ProductList/ProductList';
@@ -24,16 +24,36 @@ const products = productsFromServer.map(product => {
 });
 
 export const App = () => {
-  // const [searchQuery, setSearchQuery] = useState('');
-  const productsToShow = [...products];
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
+  let productsToShow = [...products];
+
+  if (searchQuery) {
+    productsToShow = productsToShow.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLocaleLowerCase()),
+    );
+  }
+
+  if (selectedUserId) {
+    productsToShow = productsToShow.filter(
+      product => product.user && product.user.id === selectedUserId,
+    );
+  }
 
   return (
     <div className="section">
       <div className="container">
         <h1 className="title">Product Categories</h1>
-        <FilterPanel />
+        <FilterPanel
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          selectedUserId={selectedUserId}
+          setSelectedUserId={setSelectedUserId}
+          users={usersFromServer}
+        />
 
-        <ProductList productsToShow={productsToShow} />
+        <ProductList products={productsToShow} />
       </div>
     </div>
   );
