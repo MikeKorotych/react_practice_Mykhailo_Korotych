@@ -28,19 +28,31 @@ export const App = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
 
+  const handleResetAllFilters = () => {
+    setSearchQuery('');
+    setSelectedUserId(null);
+    setSelectedCategoryIds([]);
+  };
+
   let productsToShow = [...products];
 
   // if (searchQuery) {
-  //   productsToShow = productsToShow.filter(product =>
-  //     product.name.toLowerCase().includes(searchQuery.toLocaleLowerCase()),
+  //   productsToShow = productsToShow.filter(p =>
+  //     p.name.toLowerCase().includes(searchQuery.toLowerCase()),
   //   );
   // }
 
   if (selectedUserId) {
     productsToShow = productsToShow.filter(
-      product => product.user && product.user.id === selectedUserId,
+      product => product.user.id === selectedUserId,
     );
   }
+
+  // if (selectedCategoryIds.length > 0) {
+  //   productsToShow = productsToShow.filter(product =>
+  //     selectedCategoryIds.includes(product.category.id),
+  //   );
+  // }
 
   return (
     <div className="section">
@@ -55,6 +67,7 @@ export const App = () => {
           selectedCategoryIds={selectedCategoryIds}
           setSelectedCategoryIds={setSelectedCategoryIds}
           categories={categoriesFromServer}
+          onReset={handleResetAllFilters}
         />
 
         <ProductList products={productsToShow} />

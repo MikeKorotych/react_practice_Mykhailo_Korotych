@@ -8,7 +8,25 @@ const FilterPanel = ({
   selectedUserId,
   setSelectedUserId,
   users,
+  selectedCategoryIds,
+  setSelectedCategoryIds,
+  categories,
+  onReset,
 }) => {
+  const handleCategoryToggle = categoryId => {
+    if (selectedCategoryIds.includes(categoryId)) {
+      setSelectedCategoryIds(prev =>
+        prev.filter(catId => catId !== categoryId),
+      );
+    } else {
+      setSelectedCategoryIds(prev => [...prev, categoryId]);
+    }
+  };
+
+  const handleClearCategories = () => {
+    setSelectedCategoryIds([]);
+  };
+
   return (
     <div className="block">
       <nav className="panel">
@@ -68,31 +86,34 @@ const FilterPanel = ({
 
         <div className="panel-block is-flex-wrap-wrap">
           <a
+            onClick={handleClearCategories}
             href="#/"
             data-cy="AllCategories"
-            className="button is-success mr-6 is-outlined"
+            className={cn('button', 'mr-2', 'my-1', 'is-info', {
+              'is-outlined': selectedCategoryIds.length > 0,
+            })}
           >
             All
           </a>
 
-          <a data-cy="Category" className="button mr-2 my-1 is-info" href="#/">
-            Category 1
-          </a>
-
-          <a data-cy="Category" className="button mr-2 my-1" href="#/">
-            Category 2
-          </a>
-
-          <a data-cy="Category" className="button mr-2 my-1 is-info" href="#/">
-            Category 3
-          </a>
-          <a data-cy="Category" className="button mr-2 my-1" href="#/">
-            Category 4
-          </a>
+          {categories.map(category => (
+            <a
+              key={category.id}
+              href="#/"
+              data-cy="Category"
+              onClick={() => handleCategoryToggle(category.id)}
+              className={cn('button', 'mr-2', 'my-1', {
+                'is-info': selectedCategoryIds.includes(category.id),
+              })}
+            >
+              {category.title}
+            </a>
+          ))}
         </div>
 
         <div className="panel-block">
           <a
+            onClick={onReset}
             data-cy="ResetAllButton"
             href="#/"
             className="button is-link is-outlined is-fullwidth"
