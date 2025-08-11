@@ -1,28 +1,18 @@
 import React from 'react';
 
-const FilterPanel = () => {
+import cn from 'classnames';
+
+const FilterPanel = ({
+  searchQuery,
+  setSearchQuery,
+  selectedUserId,
+  setSelectedUserId,
+  users,
+}) => {
   return (
     <div className="block">
       <nav className="panel">
         <p className="panel-heading">Filters</p>
-
-        <p className="panel-tabs has-text-weight-bold">
-          <a data-cy="FilterAllUsers" href="#/">
-            All
-          </a>
-
-          <a data-cy="FilterUser" href="#/">
-            User 1
-          </a>
-
-          <a data-cy="FilterUser" href="#/" className="is-active">
-            User 2
-          </a>
-
-          <a data-cy="FilterUser" href="#/">
-            User 3
-          </a>
-        </p>
 
         <div className="panel-block">
           <p className="control has-icons-left has-icons-right">
@@ -31,19 +21,50 @@ const FilterPanel = () => {
               type="text"
               className="input"
               placeholder="Search"
-              value="qwe"
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
             />
 
             <span className="icon is-left">
               <i className="fas fa-search" aria-hidden="true" />
             </span>
 
-            <span className="icon is-right">
-              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-              <button data-cy="ClearButton" type="button" className="delete" />
-            </span>
+            {searchQuery && (
+              <span className="icon is-right">
+                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+                <button
+                  data-cy="ClearButton"
+                  type="button"
+                  className="delete"
+                  onClick={() => setSearchQuery('')}
+                />
+              </span>
+            )}
           </p>
         </div>
+
+        <p className="panel-tabs has-text-weight-bold">
+          <a
+            data-cy="FilterAllUsers"
+            href="#/"
+            className={cn({ 'is-active': !selectedUserId })}
+            onClick={() => setSelectedUserId(null)}
+          >
+            All
+          </a>
+
+          {users.map(user => (
+            <a
+              data-cy="FilterUser"
+              key={user.id}
+              href="#/"
+              className={cn({ 'is-active': selectedUserId === user.id })}
+              onClick={() => setSelectedUserId(user.id)}
+            >
+              {user.name}
+            </a>
+          ))}
+        </p>
 
         <div className="panel-block is-flex-wrap-wrap">
           <a

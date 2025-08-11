@@ -26,14 +26,15 @@ const products = productsFromServer.map(product => {
 export const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState([]);
 
   let productsToShow = [...products];
 
-  if (searchQuery) {
-    productsToShow = productsToShow.filter(product =>
-      product.name.toLowerCase().includes(searchQuery.toLocaleLowerCase()),
-    );
-  }
+  // if (searchQuery) {
+  //   productsToShow = productsToShow.filter(product =>
+  //     product.name.toLowerCase().includes(searchQuery.toLocaleLowerCase()),
+  //   );
+  // }
 
   if (selectedUserId) {
     productsToShow = productsToShow.filter(
@@ -51,6 +52,9 @@ export const App = () => {
           selectedUserId={selectedUserId}
           setSelectedUserId={setSelectedUserId}
           users={usersFromServer}
+          selectedCategoryIds={selectedCategoryIds}
+          setSelectedCategoryIds={setSelectedCategoryIds}
+          categories={categoriesFromServer}
         />
 
         <ProductList products={productsToShow} />
