@@ -15,8 +15,11 @@ const FilterPanel = ({
 }) => {
   const handleCategoryToggle = categoryId => {
     if (selectedCategoryIds.includes(categoryId)) {
-      setSelectedCategoryIds(prev =>
-        prev.filter(catId => catId !== categoryId),
+      setSelectedCategoryIds(
+        prev => prev.filter(catId => catId !== categoryId),
+        {
+          /* eslint-disable-next-line jsx-a11y/control-has-associated-label */
+        },
       );
     } else {
       setSelectedCategoryIds(prev => [...prev, categoryId]);

@@ -36,11 +36,14 @@ export const App = () => {
 
   let productsToShow = [...products];
 
-  // if (searchQuery) {
-  //   productsToShow = productsToShow.filter(p =>
-  //     p.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  //   );
-  // }
+  if (searchQuery) {
+    productsToShow = productsToShow.filter(
+      p => p.name.toLowerCase().includes(searchQuery.toLowerCase()),
+      {
+        /* eslint-disable-next-line jsx-a11y/control-has-associated-label */
+      },
+    );
+  }
 
   if (selectedUserId) {
     productsToShow = productsToShow.filter(
@@ -48,11 +51,14 @@ export const App = () => {
     );
   }
 
-  // if (selectedCategoryIds.length > 0) {
-  //   productsToShow = productsToShow.filter(product =>
-  //     selectedCategoryIds.includes(product.category.id),
-  //   );
-  // }
+  if (selectedCategoryIds.length > 0) {
+    productsToShow = productsToShow.filter(
+      product => selectedCategoryIds.includes(product.category.id),
+      {
+        /* eslint-disable-next-line jsx-a11y/control-has-associated-label */
+      },
+    );
+  }
 
   return (
     <div className="section">
