@@ -38,7 +38,7 @@ describe('', () => {
     cy.visit('/');
   });
 
-  // If you want to skip some tests just add  after the describe
+  // If you want to skip some tests just add .skip after the describe
 
   describe('Page by default', () => {
     it('should show ProductTable', () => {
