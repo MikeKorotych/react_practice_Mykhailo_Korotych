@@ -2,7 +2,6 @@ import React from 'react';
 import ProductItem from '../ProductItem/ProductItem';
 
 const ProductList = ({ products }) => {
-  console.log(products);
   if (products.length === 0) {
     return (
       <div className="box table-container">
